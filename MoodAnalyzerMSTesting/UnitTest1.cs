@@ -1,4 +1,5 @@
 using MoodAnalyzerProject;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MoodAnalyzerMSTesting
 {
@@ -21,12 +22,13 @@ namespace MoodAnalyzerMSTesting
         }
         [TestMethod]
         [TestCategory("Happy")]
-        public void GivenHappyMoodReturnHappy()
+        [DataRow(null)]
+        public void GivenHappyMoodReturnHappy(string massage)
         {
             string expected = "Happy";
-            string massage2 = "I am Happy";
+           // string massage = "I am Happy";
 
-            MoodAnalyze moodAnalyze = new MoodAnalyze(massage2);
+            MoodAnalyze moodAnalyze = new MoodAnalyze(massage);
 
             string actual = moodAnalyze.AnalyzeMood();
             Assert.AreEqual(expected, actual);
