@@ -1,3 +1,4 @@
+using System;
 using MoodAnalyzerProject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,29 +9,32 @@ namespace MoodAnalyzerMSTesting
     {
         [TestMethod]
         [TestCategory("Sad")]
-        public void GivenSadMoodReturnSad()
+        public void TestSadMood()
         {
-            string expected = "Sad";
-            string massage = "I am Sad";
+            //Arrange
+            string message = "I am in sad Mood";
+            string expected = "SAD";
+            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(message);
 
-            MoodAnalyze moodAnalyze = new MoodAnalyze(massage);
+            //Act
+            string actual = moodAnalyzer.AnalyseMood();
 
-            string actual = moodAnalyze.AnalyzeMood();
-
+            //Assert
             Assert.AreEqual(expected, actual);
-
         }
         [TestMethod]
         [TestCategory("Happy")]
-        [DataRow(null)]
-        public void GivenHappyMoodReturnHappy(string massage)
+        public void TestHappyMood() 
         {
+            //Arrange
+            string message = "I am in Happy Mood";
             string expected = "Happy";
-           // string massage = "I am Happy";
+            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(message);
 
-            MoodAnalyze moodAnalyze = new MoodAnalyze(massage);
+            //Act
+            string actual = moodAnalyzer.AnalyseMood();
 
-            string actual = moodAnalyze.AnalyzeMood();
+            //Assert
             Assert.AreEqual(expected, actual);
         }
     }
