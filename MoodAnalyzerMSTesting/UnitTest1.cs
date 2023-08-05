@@ -55,5 +55,26 @@ namespace MoodAnalyzerMSTesting
             //Assert
             Assert.AreEqual(expected, actual);
         }
-    }
+        //TC 3.1 
+        [TestMethod]
+        [TestCategory("Custom Exception")]
+        [DataRow(null, "Message should not be null")]
+        [DataRow("", "Message should not be empty")]
+        public void GivenNullMessageTestCustomException(string userInput, string expected)
+        {
+            //Arrange
+            //string message = null;
+            //string expected = "HAPPY";
+            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(userInput);
+            try
+            {
+                //Act
+                string actual = moodAnalyzer.AnalyseMood();
+            }
+            catch (MoodAnalyzerException ex)
+            {
+                //Assert
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
 }
