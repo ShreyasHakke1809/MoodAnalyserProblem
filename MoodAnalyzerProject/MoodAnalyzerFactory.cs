@@ -28,5 +28,26 @@ namespace MoodAnalyzerProject
                 throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionTypes.CONSTRUCTOR_NOT_FOUND, "Constructor not found");
             }
         }
+        public object CreateMoodMoodAnalyserParameterObject(string className, string constructorName, string message)
+        {
+            Type type = typeof(MoodAnalyzer);
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
+            {
+                if (type.Name.Equals(constructorName))
+                {
+                    ConstructorInfo constructorInfo = type.GetConstructor(new Type[] { typeof(string) });
+                    var obj = constructorInfo.Invoke(new object[] { message });
+                    return obj;
+                }
+                else
+                {
+                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionTypes.CONSTRUCTOR_NOT_FOUND, "Could not find constructor");
+                }
+            }
+            else
+            {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionTypes.CLASS_NOT_FOUND, "Could not find class");
+            }
+        }
     }
 }

@@ -29,17 +29,17 @@
                 }
                 else
                 {
-                    return "HAPPY";
+                    return "Happy";
                 }
             }
             catch (MoodAnalyzerException)
             {
-                return "HAPPY";
+                return "Happy";
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return "HAPPY";
+                return "Happy";
             }
         }
     }

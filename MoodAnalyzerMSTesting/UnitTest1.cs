@@ -1,10 +1,16 @@
 using MoodAnalyzerProject;
 
-namespace TestProject1
+namespace MoodAnalyzerMSTesting
 {
     [TestClass]
     public class UnitTest1
     {
+        MoodAnalyzerFactory factory;
+        [TestInitialize]
+        public void Setup()
+        {
+            factory = new MoodAnalyzerFactory();
+        }
         //TC1.1
         [TestMethod]
         [TestCategory("Sad")]
@@ -75,20 +81,6 @@ namespace TestProject1
                 Assert.AreEqual(expected, ex.Message);
             }
         }
-        //TC 4.1 
-        [TestMethod]
-        [TestCategory("Reflection")]
-        [DataRow("MoodAnalyzerProblem.Reflection.Customer", "Customer")]
-        public void GivenMoodAnalyzerClassName_ReturnMoodAnalyzerObject(string className, string constructorName)
-        {
-            MoodAnalyzer expected = new MoodAnalyzer();
-            object obj = null;
-
-            MoodAnalyzerFactory factory = new MoodAnalyzerFactory();
-            obj = factory.CreateMoodMoodAnalyse(className, constructorName);
-            expected.Equals(obj);
-        }
-
         //TC 4.2 
         [TestMethod]
         [TestCategory("Reflection")]
@@ -120,6 +112,65 @@ namespace TestProject1
             catch (MoodAnalyzerException ex)
             {
                 Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        //TC 5.1
+        [TestCategory("Reflection")]
+        [TestMethod]
+        [DataRow("I am in Happy mood")]
+        [DataRow("I am in Sad mood")]
+        [DataRow("I am in any mood")]
+        public void GivenMessageReturnParameterizedConstructor(string message)
+        {
+            MoodAnalyzer expected = new MoodAnalyzer(message);
+            object obj = null;
+            try
+            {
+                obj = factory.CreateMoodMoodAnalyserParameterObject("MoodAnalyzer", "MoodAnalyzer", message);
+            }
+            catch (MoodAnalyzerException actual)
+            {
+                Assert.AreEqual(expected, actual.Message);
+            }
+            obj.Equals(expected);
+        }
+        //TC 5.2
+        [TestCategory("Reflection")]
+        [TestMethod]
+        [DataRow("Company", "I am in Happy mood", "Could not find class")]
+        [DataRow("Student", "I am in Sad mood", "Could not find class")]
+        public void GivenMessageReturnParameterizedClassNotFound(string className, string message, string expextedError)
+        {
+            MoodAnalyzer expected = new MoodAnalyzer(message);
+            object obj = null;
+            try
+            {
+                obj = factory.CreateMoodMoodAnalyserParameterObject(className, "MoodAnalyzer", message);
+
+            }
+            catch (MoodAnalyzerException actual)
+            {
+                Assert.AreEqual(expextedError, actual.Message);
+            }
+        }
+
+        //TC 5.3 
+        [TestCategory("Reflection")]
+        [TestMethod]
+        [DataRow("Customer", "I am in Happy mood", "Could not find constructor")]
+        [DataRow("Student", "I am in Sad mood", "Could not find constructor")]
+        public void GivenMessageReturnParameterizedConstructorNotFound(string constructor, string message, string expextedError)
+        {
+            MoodAnalyzer expected = new MoodAnalyzer(message);
+            object obj = null;
+            try
+            {
+                obj = factory.CreateMoodMoodAnalyserParameterObject("MoodAnalyzer", constructor, message);
+
+            }
+            catch (MoodAnalyzerException actual)
+            {
+                Assert.AreEqual(expextedError, actual.Message);
             }
         }
     }
