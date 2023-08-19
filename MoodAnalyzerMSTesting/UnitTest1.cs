@@ -1,8 +1,6 @@
-using System;
 using MoodAnalyzerProject;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MoodAnalyzerMSTesting
+namespace TestProject1
 {
     [TestClass]
     public class UnitTest1
@@ -26,7 +24,7 @@ namespace MoodAnalyzerMSTesting
         //TC1.2
         [TestMethod]
         [TestCategory("Happy")]
-        public void TestHappyMood() 
+        public void TestHappyMood()
         {
             //Arrange
             string message = "I am in Happy Mood";
@@ -77,4 +75,52 @@ namespace MoodAnalyzerMSTesting
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+        //TC 4.1 
+        [TestMethod]
+        [TestCategory("Reflection")]
+        [DataRow("MoodAnalyzerProblem.Reflection.Customer", "Customer")]
+        public void GivenMoodAnalyzerClassName_ReturnMoodAnalyzerObject(string className, string constructorName)
+        {
+            MoodAnalyzer expected = new MoodAnalyzer();
+            object obj = null;
+
+            MoodAnalyzerFactory factory = new MoodAnalyzerFactory();
+            obj = factory.CreateMoodMoodAnalyse(className, constructorName);
+            expected.Equals(obj);
+        }
+
+        //TC 4.2 
+        [TestMethod]
+        [TestCategory("Reflection")]
+        [DataRow("MoodAnalyzerProblem.Reflection.Owner", "Reflection.Owner", "Class not found")]
+        public void GivenImproperClassName_ThrowException(string className, string constructorName, string expected)
+        {
+            try
+            {
+                MoodAnalyzerFactory factory = new MoodAnalyzerFactory();
+                object actual = factory.CreateMoodMoodAnalyse(className, constructorName);
+            }
+            catch (MoodAnalyzerException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+
+        //TC 4.3 
+        [TestMethod]
+        [TestCategory("Reflection")]
+        [DataRow("MoodAnalyzerProblem.Reflection.Customer", "Reflection.OwnerMood", "Constructor not found")]
+        public void GivenImproperConstructorName_ThrowException(string className, string constructorName, string expected)
+        {
+            try
+            {
+                MoodAnalyzerFactory factory = new MoodAnalyzerFactory();
+                object actual = factory.CreateMoodMoodAnalyse(className, constructorName);
+            }
+            catch (MoodAnalyzerException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+    }
 }

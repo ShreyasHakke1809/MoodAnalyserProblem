@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MoodAnalyzerProject
+﻿namespace MoodAnalyzerProject
 {
     public class MoodAnalyzer
     {
         public string message;
+        public MoodAnalyzer()
+        {
+            Console.WriteLine("Default Constructor");
+        }
         public MoodAnalyzer(string message)
         {
             this.message = message;
